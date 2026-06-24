@@ -4,6 +4,7 @@
 // using import statement 
 
 import dotenv from "dotenv"
+import { app } from "./app.js"
 
 import connectDB from "./db/index.js"
 
@@ -12,7 +13,16 @@ dotenv.config({
 })
 
 
-connectDB() ; 
+connectDB()
+.then(() => {
+    let portat = process.env.PORT || 8000 ; 
+    app.listen( portat , () => {
+        console.log(`Server is running at ${portat}`)
+    })
+})
+.catch((error) => {
+    console.log("Mongo db connection failled : " , error) ; 
+})
 
 
 
